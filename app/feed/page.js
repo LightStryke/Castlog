@@ -33,40 +33,25 @@ export default function Feed() {
 
   return (
     <main className="min-h-screen bg-gray-950 text-white">
-
-      {/* Header */}
-      <div className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-        <h1 className="text-xl font-bold text-emerald-400">🎣 CastLog</h1>
-        <div className="flex gap-3">
-          <a href="/post" className="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold px-4 py-2 rounded-lg text-sm">
-            + Post catch
-          </a>
-          <a href="/profile" className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-sm">
-            Profile
-          </a>
-        </div>
-      </div>
-
-      {/* Feed */}
-      <div className="max-w-lg mx-auto px-4 py-6">
+      <div className="max-w-3xl mx-auto px-4 py-6">
         {loading && <p className="text-gray-400 text-center">Loading catches...</p>}
 
         {!loading && catches.length === 0 && (
           <div className="text-center py-20">
             <p className="text-4xl mb-4">🎣</p>
             <p className="text-gray-400">No catches yet — be the first to post one!</p>
-            <a href="/post" className="mt-4 inline-block bg-emerald-500 text-black font-bold px-6 py-3 rounded-xl">
+            <a href="/post" className="mt-4 inline-block btn-glow bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-6 py-3 rounded-xl">
               Post your first catch
             </a>
           </div>
         )}
 
         {catches.map((c) => (
-          <div key={c.id} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 mb-4">
+          <div key={c.id} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 mb-4 card-hover">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <span className="font-semibold text-sm">{c.profiles?.username || 'Angler'}</span>
-                <span className="text-xs text-emerald-400 ml-2">{c.profiles?.rank || 'Minnow'}</span>
+                <span className="ml-2 rounded-full bg-emerald-500/20 px-2 py-1 text-xs font-semibold text-emerald-400">{c.profiles?.rank || 'Minnow'}</span>
               </div>
               <span className="text-xs text-gray-500">{new Date(c.created_at).toLocaleDateString()}</span>
             </div>
@@ -76,7 +61,7 @@ export default function Feed() {
             )}
 
             <h3 className="text-lg font-bold mb-1">{c.species}</h3>
-            <div className="flex gap-4 text-sm text-gray-400 mb-3">
+            <div className="flex gap-4 text-sm text-gray-400 mb-3 flex-wrap">
               {c.weight_lbs && <span>⚖️ {c.weight_lbs} lbs</span>}
               {c.length_inches && <span>📏 {c.length_inches}"</span>}
               {c.location && <span>📍 {c.location}</span>}
@@ -85,14 +70,13 @@ export default function Feed() {
 
             <button
               onClick={() => handleVote(c.id)}
-              className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-sm"
+              className="flex items-center gap-2 btn-glow bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-sm"
             >
               👍 {c.votes} votes
             </button>
           </div>
         ))}
       </div>
-
     </main>
   )
 }

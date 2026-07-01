@@ -18,17 +18,18 @@ export default function FishBackground() {
     resize()
     window.addEventListener('resize', resize)
 
-    const FISH_COUNT = 200
+    const FISH_COUNT = 35
     const fish = Array.from({ length: FISH_COUNT }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      size: Math.random() * 16 + 12,
-      speedX: (Math.random() - 0.5) * 0.5,
-      speedY: -(Math.random() * 0.7 + 0.3),
+      size: Math.random() * 16 + 10,
+      speedX: (Math.random() - 0.5) * 0.3,
+      speedY: -(Math.random() * 0.35 + 0.15),
       wobble: Math.random() * Math.PI * 2,
-      wobbleSpeed: Math.random() * 0.02 + 0.008,
-      opacity: Math.random() * 0.12 + 0.04,
+      wobbleSpeed: Math.random() * 0.03 + 0.01,
+      opacity: Math.random() * 0.09 + 0.06,
       fleeing: false,
+      canFlee: 'ontouchstart' in window === false,
     }))
 
     const drawFish = (f) => {
@@ -77,8 +78,8 @@ export default function FishBackground() {
       ctx.restore()
     }
 
-    const MOUSE_RADIUS = 180
-    const MAX_FLEE_SPEED = 4.5
+    const MOUSE_RADIUS = 140
+    const MAX_FLEE_SPEED = 4.0
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -90,14 +91,14 @@ export default function FishBackground() {
         const dy = f.y - mouseY
         const dist = Math.sqrt(dx * dx + dy * dy)
 
-        if (dist < MOUSE_RADIUS) {
+        if (f.canFlee && dist < MOUSE_RADIUS) {
           const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS
           f.speedX += (dx / dist) * force * 0.6
           f.speedY += (dy / dist) * force * 0.6
           f.fleeing = true
         } else {
-          f.speedX += (Math.sin(f.wobble) * 0.25 - f.speedX) * 0.025
-          f.speedY += (-0.55 - f.speedY) * 0.012
+          f.speedX += (Math.sin(f.wobble) * 0.15 - f.speedX) * 0.03
+          f.speedY += (-0.35 - f.speedY) * 0.01
           f.fleeing = false
         }
 
@@ -142,8 +143,8 @@ export default function FishBackground() {
         if (f.y < -20) {
           f.y = canvas.height + 20
           f.x = Math.random() * canvas.width
-          f.speedX = (Math.random() - 0.5) * 0.5
-          f.speedY = -(Math.random() * 0.7 + 0.3)
+          f.speedX = (Math.random() - 0.5) * 0.3
+          f.speedY = -(Math.random() * 0.35 + 0.15)
         }
         if (f.x < -20) f.x = canvas.width + 20
         if (f.x > canvas.width + 20) f.x = -20
