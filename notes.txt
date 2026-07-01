@@ -1,0 +1,4 @@
+IDEAS
+
+when you log a fish make it swim in the background
+aquarium display on front profile page - displays trophy catches
