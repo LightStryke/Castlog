@@ -9,8 +9,7 @@ const navItems = [
   { label: 'Feed', href: '/feed' },
   { label: 'Post Catch', href: '/post' },
   { label: 'Leaderboard', href: '/leaderboard' },
-  { label: 'Species', href: '/species' },
-  { label: 'Tournaments', href: '/tournaments' },
+  { label: 'Map', href: '/map' },
   { label: 'Profile', href: '/profile' },
 ]
 
@@ -27,10 +26,10 @@ export default function NavBar() {
   const isActive = (href) => pathname === href || (href !== '/' && pathname?.startsWith(href))
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 bg-gray-950/95 backdrop-blur border-b border-gray-800">
+    <header className="fixed inset-x-0 top-0 z-30 border-b border-gray-800 bg-gray-950/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="text-emerald-400 font-bold text-lg tracking-wide">
-          🎣 CastLog
+        <Link href="/" className="text-lg font-bold tracking-wide text-emerald-400">
+          <span className="gradient-text">🎣 CastLog</span>
         </Link>
 
         <nav className="hidden items-center gap-4 md:flex">
@@ -38,7 +37,7 @@ export default function NavBar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-medium transition ${isActive(item.href) ? 'text-emerald-500 tab-active' : 'text-gray-400 hover:text-white'}`}
+              className={`border-b-2 border-transparent text-sm font-medium transition ${isActive(item.href) ? 'border-emerald-500 text-emerald-400' : 'text-gray-400 hover:text-white'}`}
             >
               {item.label}
             </Link>
@@ -48,7 +47,7 @@ export default function NavBar() {
         <div className="hidden items-center gap-3 md:flex">
           <button
             onClick={handleSignOut}
-            className="btn-glow bg-gray-800 hover:bg-gray-700 text-white rounded-xl px-4 py-2 text-sm"
+            className="rounded-xl border border-gray-700 bg-gray-900 px-4 py-2 text-sm text-gray-300 transition hover:border-gray-500 hover:text-white"
           >
             Sign out
           </button>
@@ -81,7 +80,7 @@ export default function NavBar() {
                 setMenuOpen(false)
                 handleSignOut()
               }}
-              className="btn-glow bg-gray-800 hover:bg-gray-700 text-white rounded-xl px-4 py-3 text-sm text-left"
+              className="rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-left text-sm text-gray-300 transition hover:border-gray-500 hover:text-white"
             >
               Sign out
             </button>
